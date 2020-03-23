@@ -1,0 +1,99 @@
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{libertine}
+\setmonofont{Courier}
+%\usepackage[euler-digits,euler-hat-accent]{eulervm}
+\usepackage{graphicx}
+\usepackage{url}
+
+\usepackage{tabularx}
+\newcolumntype{M}{>{$}l<{$}}
+\newcolumntype{N}{>{$}r<{$}}
+\newcolumntype{P}{>{$}c<{$}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
+
+\usepackage{booktabs}
+\usepackage{ctex}
+\setCJKmainfont[ItalicFont=Noto Sans CJK SC Bold, BoldFont=Noto Serif CJK SC Black]{Noto Serif CJK SC}
+
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{backgray}{gray}{0.95}
+\lstdefinestyle{somelanguage}{ %
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  mathescape=true,
+  showstringspaces=false,
+  numbers=left,
+  xleftmargin=2em,
+  framexleftmargin=1.5em,
+  numbersep=5pt,
+  numberstyle=\tiny\color{mygray},
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\itshape\color{red},
+  morekeywords={ },
+  tabsize=2,
+  backgroundcolor=\color{backgray}
+}
+
+\title{Proofs and Types}
+\author{}
+
+\begin{document}
+\maketitle
+
+\section{注意}
+\begin{enumerate}
+	\item 书中整数指自然数
+	\item $\Rightarrow$ 指 $\to$
+\end{enumerate}
+
+\section{Chapter 1: SENSE, DENOTATION AND SEMANTICS}
+\paragraph{Sense and denotation}
+\url{https://www.douban.com/note/668324388/} 指示词这个词语本身是 sense，它所指示的东西是 denotation。
+于是说明 $27\times 37=999$ 就是说明左右不同的 sense 的 denotation 是一样的。
+\begin{quote}
+given a sentence A, there are two ways of seeing it:
+
+• as a sequence of instructions, which determine its sense \ldots
+
+• as the ideal result found by these operations: this is its denotation.
+\end{quote}
+
+Syntax / semantics; sense / denotation; proof / truth; 的区别：传统历史上大家注重 denotation，但是计算机的兴起让人注意 sense.
+
+\paragraph{Semantic traditions}
+\textbf{Tarski 语义}：只关心句子真值（是 \textbf{t} 还是 \textbf{f}）。
+假设原子句子的真值已知，给出连接词的真值表，量词的真值含义，就可以定义句子的真值。
+
+\textbf{Heyting 语义}：关心 ``what is a proof of A?'' 而非 ``when is a sentence A true?''。
+Proof 自己就是一个对象，不是我们写下的东西。
+我们自然知道原子句子的 proof，$A\land B$ 的 proof 是一个二元组 $(p, q)$ 其中 $p$ 是 $A$ 的 proof 而 $q$ 是 $B$ 的 proof；
+$A \lor B$ 的是一个 $(i, p)$ 其中 $i\in\{0, 1\}$；
+$A \to B$ 的 proof 是一个函数：$A$ 的 proof 映射成 $B$ 的 proof；
+$\forall a\, .\;P$ 的 proof 是一个函数：任一论域内的的元素 $a'$ 映射成 $P[a\mapsto a']$ 的 proof。
+
+Heyting 不是 formal system。比如，里面的 ``函数'' 就不是形式定义的。
+
+\section{Chapter 2: NATURAL DEDUCTION}
+一个证明像是一个树状结构\footnote{this view is more a graphical illusion than a mathematical reality}。
+
+第二章自然演绎只考虑 $\to, \forall, \land$ 片段。
+每个引入规则都有一个对应的消去规则。
+
+
+
+%\bibliographystyle{plain}
+%\nocite{*}
+%\bibliography{TODO}
+\end{document}
