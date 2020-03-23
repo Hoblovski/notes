@@ -1,0 +1,280 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[inference]{semantic}
+\usepackage{mathtools}
+
+\title{Type and Programming Languages}
+\author{Hoblovski}
+
+\newcommand{\nset}{\mathbb{N}}
+\newcommand{\rset}{\mathbb{R}}
+\newcommand{\ite}[3]{\text{if}\; #1 \; \text{then}\; #2 \; \text{else}\; #3}
+\newcommand{\lett}[3]{\text{let}\; #1\, =\, #2 \;\text{in}\; #3}
+\newcommand{\lam}[2]{\lambda #1 .\;#2}
+\newcommand{\lamt}[3]{\lambda #1: #2 .\;#3}
+\newcommand{\lamk}[3]{\lambda #1 :: #2 .\;#3}
+\newcommand{\app}[2]{#1\, #2}
+\newcommand{\appp}[2]{\left(#1\, #2\right)}
+\newcommand{\tapp}[2]{#1\, \left[#2\right]}
+\newcommand{\typjud}[2]{\Gamma \vdash #1: #2}
+\newcommand{\typjudp}[2]{\Gamma \vdash \left(#1\right): #2}
+\newcommand{\typjudr}[2]{\Gamma,\; \Sigma \vdash #1: #2}
+\newcommand{\typjudrp}[2]{\Gamma, \; \Sigma \vdash \left(#1\right): #2}
+\newcommand{\typjudc}[3]{\Gamma \vdash #1: #2 \;| #3}
+\newcommand{\typjudcp}[3]{\Gamma \vdash \left(#1\right): #2 \;| #3}
+\newcommand{\mtrue}{\mathrm{true}}
+\newcommand{\mfalse}{\mathrm{false}}
+\newcommand{\mref}{\mathrm{ref}\, }
+\newcommand{\mtop}{\mathrm{top}}
+\newcommand{\mbot}{\mathrm{bot}}
+\newcommand{\mRef}{\mathrm{Ref}\, }
+\newcommand{\munit}{\text{unit}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\uquant}[2]{\forall #1 \, .\; #2}
+\newcommand{\equant}[2]{\exists #1 \, .\; #2}
+\newcommand{\epack}[2]{#1 \,\mathrm{as}\; #2}
+\newcommand{\elet}[4]{\text{let}\; \{#1, #2\}\, =\, #3 \;\text{in}\; #4}
+\newcommand{\TBool}{\text{Bool}}
+\newcommand{\TNat}{\text{\texttt{Nat}}}
+\newcommand{\TVec}{\text{\texttt{Vec}}}
+\newcommand{\lambdaLF}{\lambda_{\text{LF}}}
+\newcommand{\lambdaF}{\lambda_{\text{F}}}
+\newcommand{\lambdato}{\lambda_{\to}}
+\newcommand{\DT}{\, .\;}
+
+% Setting all equations left justified
+%
+% \documentclass[fleqn]{article}
+% \usepackage{amsmath}
+% \setlength{\mathindent}{2em}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Ch1: Substructural Types}
+\subsection{Concepts}
+\paragraph{Structural properties}
+  \begin{itemize}
+    \item \emph{exchange} (order of appearence in $\Gamma$ does not matter),
+      \[
+        \inference{
+          \Gamma_1, \; x_1:T_1, x_2: T_2, \;\Gamma_2 \vdash x: T
+        }{
+          \Gamma_1, \; x_2:T_2, x_1: T_1, \;\Gamma_2 \vdash x: T
+        }
+      \]
+    \item \emph{weakening} (adding extra unused assumptions)\footnote{implicit alpha conversion ;P},
+      \[
+        \inference{
+          \Gamma_1, \Gamma_2 \vdash x:T
+        }{
+          \Gamma_1,\;x_1:T_1, \;\Gamma_2 \vdash x:T
+        }
+      \]
+    \item \emph{contraction}
+      \[
+        \inference{
+          \Gamma_1, \; x_2:T_1, x_3:T_1, \;\Gamma_2\vdash t:T_2
+        }{
+          \Gamma_1, \; x_1:T_1,\;\Gamma_2\vdash [x_1\mapsto x_1] [x_3\mapsto x_1]\,  t:T_2
+        }
+      \]
+  \end{itemize}
+
+\paragraph{Flavors}
+  \begin{itemize}
+    \item Linear: exchange.
+      Use once.
+    \item Affine: exchange + weakening
+      Use at most once.
+    \item Relevant: exchange + contraction
+      Use at least once.
+    \item Ordered: none
+      Use once and use in order.
+    \item Use $q$ for system (also qualifier).
+      $q_1 \sqsubseteq q_2$ means $q_1$ is more restrictive (less structural properties) than $q_2$.
+  \end{itemize}
+
+\paragraph{Linear Type System}
+  Use just once, so deallocate after use i.e. use = free. $\to$ no memleak, no use-after-free.
+  \begin{itemize}
+    \item Add qualifiers $q ::= \text{lin} \;|\; \text{un}$. Literals (bool, abs, etc.) annotated with $q$.
+    \item Types are qualified pretypes $T ::= q\, P$. Pretypes are $\lambda{\to}$ types.
+    \item \emph{Context split}: $\Gamma = \Gamma_1 \circ \Gamma_2$, and require any $x: \text{lin}\, T$ must appear in only one.
+    \item \emph{Containment}: disallow $\text{un}$ terms to contain $\text{lin}$ terms. Subterms cannot be more restrictive.
+    \item $q(T)$: $q$ is no less restrictive than $T$'s qualifier. $q(\Gamma)$: $q$ is no less restrictive than any types in $\Gamma$.
+      (dzy; write like $q \sqsubseteq T$ and $q \sqsubseteq \Gamma$.)
+    \item Ensure linear variable used $\ge$ once: $T-Var$.
+\[
+  \inference{\Gamma_1, \Gamma_2 \text{ contains no linear types}}
+            {\Gamma_1, x:T, \Gamma_2\vdash x:T}
+            \tag{T-Var}
+\]
+      example: $\text{un}~(\lambda x:\text{un}\, \TBool:\top)$ does not use $x$ and fails to type check.
+    \item Ensure linear variable used $\le$ once: context split
+\[
+  \inference{\Gamma_1\vdash t_1: q\, T_1\to T_2 & \Gamma_2 \vdash t_2: T_1}
+            {\Gamma_1 \circ \Gamma_2 \vdash t_1\, t_2:T_2}
+            \tag{T-App}
+\]
+    \item Disallow creating less restrictive abstractions in a more restricted environment
+\[
+  \inference{
+    q \sqsubseteq \Gamma & \Gamma, x:T_1 \vdash t: T_2
+  }{
+    \Gamma \vdash q\, \lambda x:T_1.t \;:\;q \, T_1\to T_2
+  }
+\]
+    \item Algorithmic type checking: main difficulty is context split,
+      e.g. $\Gamma \xrightarrow{t_1} \Gamma_{\text{remain}} \xrightarrow{t_2} \Gamma_{\text{remain}}$.
+      Use notation:
+\[
+    \Gamma_{\text{before}} \vdash t:T ; \Gamma_{\text{after}}
+\]
+    \item Ensure linear variables used $\ge$ once: $\Gamma_{\text{out}} \div \Gamma_{\text{constructed variables}}$, undefined when constructed linear variables overlap with $\Gamma_{\text{out}}$ i.e. unused.
+    \item Ensure linear variables used $\le$ once: trivial, $\Gamma_{\text{out}}$ chaining.
+    \item Operational semantics: explicit store; remove linear variable from store when used.
+  \end{itemize}
+
+\paragraph{Others}
+  \begin{itemize}
+    \item TODO
+  \end{itemize}
+
+\section{Ch2: Dependent Types}
+\subsection{Concepts}
+  \begin{itemize}
+    \item Invented by Martin Lof; inspired by Curry Howard correspondence. STLC with dependent types is denoted with $\lambdaLF$.
+    \item $\lambdaLF$ introduces the \emph{dependent product type} a.k.a. \emph{pi type}, that allows term binders in types (c.f. $\lambdaF$ allows type binders).
+    \item Curry Howard correspondence: $\lambdaLF$ corresponds to first-order logic.
+        Types are formulae, while terms are proofs. Propositions may be mixed with types.
+    \item $\prod x:T_1 \DT T_2$ is basically the good old $T_1 \to T_2$, but with a binder so $x$ may occur in $T_2$. Traditional types may be written as $\prod \_:T_1\DT T_2$.
+    \item \emph{Definitional type equivalence} is crucial for $\lambdaLF$. The type checker has to know $\TVec\, 2$ is completely compatible with $\TVec\, 1+1$ \emph{at compile time}, despite syntactical distinction.
+  \end{itemize}
+
+\subsection{Elements}
+  One of the simplest dependent type systems: $\lambdaLF$.
+
+\paragraph{Terms}
+  Same as $\lambdato$.
+
+\paragraph{Types}
+  \begin{align*}
+    T \quad::= \quad & X \tag{type / family variable} \\
+      & \prod x:T \DT K \tag{pi type} \\
+      & T\, t \tag{pi type application} \\
+  \end{align*}
+
+\paragraph{Kinds}
+  \textbf{No type operators}. Just to distinguish pi types and proper types.
+  In fact $\prod x:T \DT K$ can be written as $T \to K$.
+  There is no way to construct type families. They have to be predefined.
+  \begin{align*}
+      K \quad::= \quad & * \tag{proper type} \\ 
+        & \prod x:T \DT K \tag{type family} \\
+  \end{align*}
+
+\paragraph{Contexts}
+  \begin{align*}
+    \Gamma \quad::= \quad & \emptyset \tag{empty} \\ 
+      & \Gamma, x:T \tag{variable binding} \\
+      & \Gamma, X :: K \tag{type variable binding}\\
+  \end{align*}
+
+\paragraph{Typing}
+  With T-APP, the argument enters into the return type.
+  With T-CONV, equivalent types are interchangable.
+  \[
+    \inference{
+        x:T\in\Gamma & \Gamma\vdash T::*
+    }{
+        \Gamma\vdash x:T
+    }
+    \tag{T-VAR}
+  \]
+  \[
+    \inference{
+        \Gamma\vdash S :: * & \Gamma, x:S \vdash t:T
+    }{
+        \Gamma\vdash \lambda x:S\DT T\;:\;\prod x:S \DT T
+    }
+    \tag{T-ABS}
+  \]
+  \[
+    \inference{
+        \Gamma\vdash t_1: \prod x :S \DT T &
+        \Gamma\vdash t_2: S
+    }{
+        \Gamma\vdash t_1\, t_2\;:\; [x\mapsto t_2] T
+    }
+    \tag{T-APP}
+  \]
+  \[
+    \inference{
+        \Gamma\vdash t:T_1&
+        \Gamma\vdash T_1 \equiv T_2 :: *
+    }{
+        \Gamma\vdash t:T_2
+    }
+    \tag{T-CONV}
+  \]
+
+\paragraph{Kinding}
+  I think there's something wrong with this figure.
+
+\paragraph{Kind well-formedness}
+  Basically it prohibits type families from being in the lhs of $\prod$s.
+  Because there is no term $t$ that satisfies $t:X$ for a type family $X$.
+
+\paragraph{Kind equivalence}
+  Apart from reflexitivity, symmetry and transitivity, informally:
+  \begin{itemize}
+    \item Type family kinds are equivalent if the term type and the returned kinds are equivalent.
+  \end{itemize}
+
+\paragraph{Type equivalence}
+  Apart from reflexitivity, symmetry and transitivity, informally
+  \begin{itemize}
+    \item Pi types are equivalent, if the parameter types and the return types are equivalent.
+    \item Family applications are equivalent, if the families types are equivalent and the argument \emph{terms are equivalent}.
+  \end{itemize}
+
+\paragraph{Term equivalence}
+  Apart from reflexitivity, symmetry and transitivity, informally:
+  defined for abstraction, application, plus $\beta$-reduction and $\eta$-conversion.
+
+  Term equivalence makes unconstrained type checking intractable.
+
+\subsection{Examples}
+\paragraph{Integer vectors}
+  An integer vector with length of $n$ has type $\text{\texttt{VecInt}}\, n$.
+
+  Thus
+  \begin{itemize}
+    \item \texttt{VecInt} is a \emph{family variable}; it is also a type; it has kind $\prod n:\TNat\, .\; *$.
+      But note there is clear distinction between $\prod n:\TNat\, .\;*$ and $* \Rightarrow *$.
+    \item $\text{\texttt{VecInt}}\, n$ is a proper type; it is a type; it has kind $*$.
+    \item $\text{\texttt{append}}$ is a term; it has type $\prod n:\TNat\, .\; \text{\texttt{VecInt}}\, n \to \text{\texttt{Int}} \to \text{\texttt{VecInt}}\, n+1$.
+      Thus the length invariant is encoded into the function signature.
+    \item $\text{\texttt{head}}$ is a term; it has type $\prod n:\TNat\, .\;\text{\texttt{VecInt}}\, n+1$.
+      It never accepts empty lists.
+  \end{itemize}
+
+\paragraph{Bounded natural numbers}
+  $\text{\texttt{NatR}}\, a\, b$ represents a natural number in the range $(a, b)$, refining the integer representations.
+  Then we have
+  \begin{itemize}
+    \item $\emptyset \quad:\quad \text{\texttt{NatR}} \quad::\quad \prod a:\TNat\, .\;\prod b: \TNat\, .\; *$
+    \item $\{2, 3\} \quad:\quad \text{\texttt{NatR}}\, 2\, 3\quad::\quad *$
+    \item $\lambda a: \TNat \DT \lambda b: \TNat \DT \lambda x: \text{\texttt{NatR}}\, a\, b \DT x+1$\\
+        $:\quad \prod a:\TNat\DT \prod b:\TNat\DT \prod x:\text{\texttt{NatR}}\, a\, b\DT \text{\texttt{NatR}}\, a+1\, b+1$\\
+        $::\quad *$
+  \end{itemize}
+
+\subsection{Takeaways}
+\end{document}
+

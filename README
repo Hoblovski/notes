@@ -1,0 +1,9 @@
+公开笔记. 会 force push.
+
+------------------------------------------------------------------------------
+.tex 使用 xelatex 编译，需要安装 texlive-full, texlive-lang-cjk, texlive-xetex。
+
+$ cd DIR_WHICH_CONTAINS_TEXFILES
+$ mkdir build && cd build
+$ xelatex ../xxx.tex
+

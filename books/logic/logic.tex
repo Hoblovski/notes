@@ -1,0 +1,477 @@
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{libertine}
+%\usepackage[euler-digits,euler-hat-accent]{eulervm}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{ctex}
+\setCJKmainfont[ItalicFont=Noto Sans CJK SC Bold, BoldFont=Noto Serif CJK SC Black]{Noto Serif CJK SC}
+\usepackage[inference]{semantic}
+\usepackage{prftree}
+
+\newcolumntype{M}{>{$}l<{$}}
+\newcolumntype{N}{>{$}r<{$}}
+
+\title{刑滔滔~数理逻辑}
+
+\begin{document}
+\maketitle
+
+\part{读书笔记}
+
+\section{第一章}
+\begin{itemize}
+\item RAA: reductio ad absurdum, 若从主张能推出矛盾, 则应当否定主张 \begin{itemize}
+  \item 归谬法: 从 p 推出矛盾, 则得到非 p
+  \item 和反证法不同: 从非 p 推出矛盾, 得到 p
+  \end{itemize}
+
+\item 一种说法是, 推理由命题, 而不是句子\footnote{认为句子是实体, 那么语言是不是句子的一个性质? 即使同一个命题用中文和英文一定是不同的句子.}组成. 命题有真假.
+
+\item 逻辑研究的一个目的, 是区别正确的推理于不正确的推理. \begin{itemize}
+  \item c.f. 陈为蓬: ``正确的论说形式''
+  \item 正确的推理不一定说服你: 你不接受它的前提
+  \end{itemize}
+
+\item 推理是否正确 \begin{itemize}
+  \item 语形: 从前提, 经过 ``语法的规则'', 要求语法的规则是正确的
+  \item 语义: 不可能前提都为真, 但是结论为假
+  \end{itemize}
+
+\item 从推理形式 (模式) 出发, 将变项带入, 得到推理实例.
+
+\item modus ponens: 肯定前件. modus tollens: 否定后件.
+
+\item 前提 100\% 支持结论的 (即, 不可能前提均真而结论假), 我们称为有效的推理. \begin{itemize}
+  \item 研究推理有效性的是演绎逻辑, 相对的是归纳逻辑.
+  \end{itemize}
+
+\item 矛盾式和有效式是命题形式 \begin{itemize}
+  \item 他们的实例是\emph{在逻辑上为假/真}的
+  \item 许多命题, 既不是在逻辑上为真, 也不是在逻辑上为假
+  \end{itemize}
+
+\item \emph{实质蕴含}: 将 ``如果 p 则 q'' 读为 ``并非(p 并且非 q)''
+
+\item 语形上的 ``合规则性'' 和语义上的 ``有效性'' 是否对于一个逻辑系统是一样的概念? 这是逻辑学关注的一个问题.
+
+\item ``每只矛都能刺破某张盾'' 是有歧义的.
+
+\item 概念和个体都有内涵和外延. \begin{itemize}
+  \item ``...是人'' 和 ``所有人''
+  \item ``习近平'' 和 ``2012 年中国国家主席''
+  \end{itemize}
+
+\item \emph{一阶命题}指的是, 表述个体具有什么性质, 以及个体之间有什么关系的命题.
+
+\item 概念的内涵对一阶命题的真假没有影响, 因为一阶命题的真假只与 ``个体是否例示关系'' 有关 \begin{itemize}
+  \item 只涉及一阶命题的语言是 ``外延的''
+  \item 对概念来说, 忽略非外延方面的内容, 只考虑其涉及了那些个体, 得到的抽象结果就是 ``集合''
+  \end{itemize}
+
+\item 从外延世界, 只关注个体和集合, 得到的是\emph{关系结构} i.e. \emph{结构} \begin{itemize}
+  \item 结构中所有个体组成 论域
+  \item 我们使用人工语言谈论 这样的结构
+  \end{itemize}
+
+\item 虽然不同的结构对应不同语言, 但是总之我们需要的是 \begin{itemize}
+  \item 个体\emph{变项} $x, y, z, u, v$, 量词 $\forall, \exists$, 真值连接词 $\land, \lor, \lnot, \to$
+  \item 这些词汇统称为一个语言的\emph{逻辑符号}
+  \item 非逻辑符号包含: 个体\emph{常项} $a, b, c$, 谓词 $F, G, H$ 和函数符号 $f, g, h$.
+  \end{itemize}
+
+\item ``公式'' 描述的, 严格地说不是命题, 而是命题的真假, 舍弃了其他方面的内容. \begin{itemize}
+  \item 公式本无真假, 只有只有当它们用来描述某个结构, 其中非逻辑符号有了解释, 公式才能表达某种意义, 才能有真假
+  \item 公式在某个结构中为真, 当且仅当这个结构中存在这个公式描述的 ``情形''
+  \end{itemize}
+
+\item 如果公式经过解释后在一个结构中为真, 那么称这个结构是这个公式的模型 \begin{itemize}
+  \item 公式 $F(b)$ 在结构 $D$ 中为真, 指的是: $D$ 中用来解释 $b$ 的个体属于用于解释 $F$ 的集合
+  \item 公式 $\exists x \, .\; F(x)$ 在 $D$ 中为真, 当且仅当存在一个个体属于用于解释 $F$ 的集合, 即用于解释 $F$ 的集合非空
+  \end{itemize}
+
+\item \emph{重要}: 用严格的\emph{结构}代替原来的 ``情形'', 用严格的\emph{模型}阐述真, 那么就可以精确化推理的有效性. \begin{itemize}
+  \item $\Phi$ 的任何模型都是 $\varphi$ 的模型, 那么 $\Phi \models \varphi$, 称 $\varphi$ 是 $\Phi$ 的语义后承
+  \end{itemize}
+
+\item 元语言和对象语言的区别...
+
+\item 公式模式: 用元语言变项替换公式中非逻辑符号而得到的 \begin{itemize}
+  \item 书中希腊字母是元语言符号
+  \end{itemize}
+
+\item 一组选定的推理规则形成一个推演系统.
+
+\item 形式是横线上下分别是规则的前提结论, 这样的推理称为自然推理, 是 Gentzen 的发明.
+
+\item \emph{重要}: 如果在系统 $F$ 中存在从 $\Phi$ 到 $\varphi$ 的一个推演 (过程), 那么称 $\varphi$ 是 $\Phi$ 的语形后乘, 记为 $\Phi \vdash_{F} \varphi$.
+
+\item 如果推演系统满足 \begin{itemize}
+  \item 所有推演都在有限步内完成
+  \item 能够机械地在有穷时间内判定推演中每个步骤是否合乎系统的某个规则
+  \item 推演的前提和结论能可行 (如上) 地找出
+  \item 那么推演系统称为\emph{形式推演系统}
+  \end{itemize}
+
+\item 可靠性 (健壮性): 如果 $\Phi \vdash\varphi$ 那么 $\Phi \models \varphi$.
+\item 完全性: 如果 $\Phi \models \varphi$ 那么 $\Phi \vdash \varphi$.
+\item 可判定性: 总能算法地判定 $\Phi \vdash \varphi$ 是否成立
+\end{itemize}
+
+
+
+\section{第二章}
+\begin{itemize}
+\item 本书的集合论并非严格深入的.
+
+\item 外延性原则: 说明如何 $A = B$
+\item 确定性原则: 要么 $x\in A$ 要么 $x\not\in A$, 所以强制集合论中只能使用经典逻辑.
+
+\item 朴素的认为, 集合和谓词有对应关系, 会导致问题.
+
+\item 一般概括原则: 每个谓词都决定一个集合. 会导致 Russell 悖论.
+    虽然可以通过公理化方法, 或者引入 ``类'' 区分于 ``集合'', 但是没有根本解决矛盾问题.
+    比如最基础的, 性质能否例示自身?
+    \begin{quote}
+        情形似乎是, 我们对概念, 性质的外延方面 (类, 集合) 有了相当了解, 但对它们的内涵方面所知不多.
+        Godel 认为, 逻辑不仅要研究外延, 也要研究内涵, 不仅要有集合论, 也要发展一种概念论.
+    \end{quote}
+    不过一阶逻辑中不会有悖论, 集合不能包含集合而只能包含个体.
+\end{itemize}
+
+
+
+\section{第三章}
+\begin{itemize}
+\item 结构由: 非空论域 $A$, 特指个体 ($A$ 中需要有名字的个体), $A$ 的 (多元) 子集表示性质, 以及 $A$ 上的函数组成.
+
+\item 一阶语言 $\mathcal{L}$ 的字母表包含逻辑符号和非逻辑符号.
+    所有一阶语言有同样的逻辑符号, 含 \begin{itemize}
+        \item 个体变项: 可数无穷多
+        \item 两次, 连接词
+        \item 等词 $\equiv$
+        \item 括号
+    \end{itemize}
+    非逻辑符号有 \begin{itemize}
+        \item 个体常项集: 可能为空, 这些是用一个符号特别指出的个体
+        \item $n$ 元谓词/函数集, $n \ge 1$
+    \end{itemize}
+
+\item 一阶语言不一定是一阶形式语言. 后者要求能够算法地判定任何字母是什么类型.
+    通常限制, 每类符号的数目都是可数的, 以保证字母类型可判定.
+    并不考虑非形式一阶逻辑语言.
+
+\item 存在最大的一阶 (形式) 语言 $\mathcal{L}_{\text{1st}}$, 包含可数无穷个个体常项, $n$ 元谓词 / 函数.
+
+\item 集合的归纳定义除了基始条件和归纳条件, 还有封闭条件:
+    集合只包含有穷次从基始条件运用归纳条件得到的元素.
+        归纳定义的集合上可以使用归纳证明法.
+
+\item 符号串的秩是其中连接词个数加上量词的个数.
+
+\item 语言 $\mathcal{L}$ 的\emph{项}归纳定义为: \begin{itemize}
+    \item 字母表中个体常项和逻辑符号的个体变项是基始
+    \item 归纳是函数应用.
+    \end{itemize}
+    项都是有限长的. 语言 $\mathcal{L}$ 有可数无穷多个项. 项的分解树是唯一的.
+    $\mathcal{L}$ 符号串是否是 $\mathcal{L}$ 的项是可算法地判定的.
+    项的读法是唯一的, 不会出现因为符号串的不同点断而对应不同项的情况.
+
+\item 语言 $\mathcal{L}$ 的\emph{公式}也归纳定义. \begin{itemize}
+    \item 基始是谓词应用和 $\mathbf{t}_1 \equiv \mathbf{t}_2$
+    \item 归纳是使用逻辑连接词, 以及量词的运用
+    \end{itemize}
+    公式都是有限长的. 公式的分解树是唯一的. 公式上也可归纳证明.
+    公式读法唯一. 公式分为开公式和闭公式.
+
+\item 如果集合 $A$ 有\emph{归纳}定义, 其中元素可以唯一识别, 那么我们可以\emph{递归}定义 $A$ 上的函数.
+    不严密地说, 就是将 $A$ 的归纳结构, 同态地映射到其值域上.
+
+\item 含有自由变元的公式成为开公式, 否则称为闭公式, 即语句.
+    自由变元的自由性质, 反映在语形上, 就是允许代入 (被项替换).
+
+\item 项 (注意不是公式!) $\mathbf{t}$ 在 $\varphi$ 中对 $\mathbf{x}$ 可带入, 如果 $\mathbf{x}$ 不会出现在 $\forall \mathbf{y}$ 或 $\exists \mathbf{y}$ 的辖域中, 其中 $\mathbf{y}$ 是 $\mathbf{t}$ 中变元.
+
+\item 约束变项的改变, 成为易字, 即 $\alpha$-conversion.
+\end{itemize}
+
+
+
+\section{第四章}
+\begin{itemize}
+    \item 解释一个语言, 首先需要一个语言外的某个世界, 以及将语言中非逻辑符号和世界建立起关系.
+        这样两者合起来就成为这个语言的一个结构.
+        对一个语言的解释不是唯一的, 不同的解释可能使得其中命题对应到不同的真值.
+        将一阶语言中的 ``项'' 关联到结构中的个体, 公式关联到结构的命题 (的真值).
+
+    \item 这张讨论经典语义学, 特别的注意承认排中律 $p\lor\lnot p$.
+
+    \item 对于一阶语言 $\mathcal{L}$, 一个 $\mathcal{L}$ \emph{结构} $\mathcal{A}$ 定义为 $\langle A, \eta \rangle$.
+        其中 $A$ 是个体的\emph{非空}\footnote{重要, 例如为了证明 $\forall\mathbf{x}\varphi\mathbf{x}\models\exists\mathbf{x}\varphi\mathbf{x}$}集合 i.e. 语言的论域.
+        $\eta$ 将 $\mathcal{L}$ 非逻辑符号中个体常项/$n$元谓词/$n$元函数映射到 $A$ 中元素/谓词/函数
+
+    \item 注意 $\mathbf{c}$ 是一阶语言中的符号, 而 $\eta(\mathbf{c})$ 是 $A$ 中对应的实在元素. 它们不属于一阶语言 $\mathcal{L}$,
+        用来在 $\mathcal{L}$ 之外论说 $A$ 中元素.
+
+    \item 对于 $\mathcal{L}$ 的结构 $\mathcal{A}$, 一个 $\mathcal{A}$ 中的\emph{赋值} $\rho$ 是从 $\mathcal{L}$ 的个体变项集 (逻辑符号) 到 $A$ 的函数.
+        有了赋值之后, 加上结构中已有的 $\eta$, 使得 $\mathcal{L}$ 的项总能对应 $A$ 中元素.
+        % 并且 $\mathcal{L}$ 中的公式都能确定真值.
+
+    \item 对语言 $\mathcal{L}$ 的\emph{解释} $\mathcal{\sigma}=\langle \mathcal{A}, \rho \rangle$ 包含该语言的某结构 $\mathcal{A}$ 和其中的赋值 $\rho$.
+        语言的 $\sigma$ 能够将每个 $\mathcal{L}$ 项 $\mathbf{t}$ (注意这里是元符号) 映射到论域 $A$ 中的元素 $\rho(\mathbf{t})$, 这个映射容易递归定义.
+
+    \item $\mathcal{L}$ 公式 $\mathbf{P}\mathbf{t}_1\ldots\mathbf{t}_n$ 在解释 $\sigma = \langle \langle A, \eta\rangle, \sigma\rangle$ 下为真, 即是说
+        $\mathcal{A}$ 中有事实 $\langle \sigma(\mathbf{t}_1), \ldots, \sigma(\mathbf{t}_n) \rangle \in \eta(\mathbf{P})$.
+
+    \item 对等词的理解: $\mathbf{t}\equiv\mathbf{s}$ 指这两个项代表同一个个体, 即 $\sigma(\mathbf{t}) = \sigma(\mathbf{s})$, 其中 $=$ 是 $A$ 上个体等同关系.
+
+    \item 量词 $\forall \mathbf{x} \varphi(\mathbf{x})$ (这是一个公式模式) 不能解释为 ``论域中所有的 $\mathbf{x}$ 均有性质 $\varphi$'', 因为元变元 $\mathbf{x}$ 指涉 $\mathcal{L}$ 中个体变元, 而不是 $A$ 中个体. 应当理解为 ``所有的 $a\in A$, $\varphi(\mathbf{x})$ 均在 $\sigma[\mathbf{x}\mapsto a]$ (这个赋值也确定了一个解释) 下为真''.
+
+    \item 连接词的语义解释为真值函数 i.e. 真值表. 特别的, $\to$ (在所有解释下都) 表示实质蕴含.
+
+    \item 递归定义一个解释 $\sigma$ \emph{满足}公式 $\varphi$, 记为 $\sigma(\varphi) = \top$.
+        其中 $\top$, $\bot$ 是元符号.
+
+    \item $\sigma_1$ 和 $\sigma_2$ 在 $\mathbf{t}$ 上\emph{合同}: $\mathbf{t}$ 中非逻辑符号对应 $\sigma_{\cdot}(u)$ 和个体变元对应 $\rho_{\cdot}(\mathbf{x})$ 相同. 同样, 在 $\varphi$ 上合同, 是非逻辑符号和\emph{自由}变元对应相同.
+        由此推出合同引理:\[
+            \sigma_1, \sigma_2 \text{ 在 } \mathbf{t} \text{ 上合同 } \Rightarrow \sigma_1(\mathbf{t}) = \sigma_2(\mathbf{t})
+        \]以及\[
+            \sigma_1, \sigma_2 \text{ 在 } \varphi \text{ 上合同 } \Rightarrow \sigma_1(\varphi) = \sigma_2(\varphi)
+        \]
+        即, 公式 $\varphi$ 是否可满足, 只由 $\eta$ 对于 $\varphi$ 中非逻辑符号的解释, 以及 $\rho$ 中对自由变元的赋值所确定.
+
+    \item 给定 $\mathcal{L}$, 其结构 $\mathcal{A}$, 其闭公式 $\varphi$,
+        则有: 存在一个 $\rho$ 使得 $\langle \mathcal{A}, \rho\rangle$ 满足 $\varphi$, 当且仅当任何 $\rho$ 都使得 $\langle \mathcal{A}, \rho\rangle$ 都满足 $\varphi$.
+        即, 解释是否满足闭公式不取决于解释中的赋值如何.
+
+    \item 对 $\mathcal{L}$ 中\emph{闭}公式 $\varphi$ 和结构 $\mathcal{A}$, 只要存在 (由上, 即任意) $\rho$ 使得 $\sigma=\langle \mathcal{A}, \rho\rangle$ 满足 $\varphi$,
+        则称 $\varphi$ 在结构 $\mathcal{A}$ 中为\emph{真}, 称 $\mathcal{A}$ 是 $\varphi$ 的模型.
+
+    \item 闭公式 i.e. 语句表达关于结构 (而非赋值) 的命题.
+        为了刻画一个结构 e.g. 算术结构, 我们需要选择一组表达其中真命题的语句, 构成一个理论.
+        即, ``被语句刻画的结构是语句的模型''.
+
+    \item 满足和真的区别是, 公式被解释满足或者不满足, 而语句被解释满足就是语句在解释的结构中为真.
+
+    \item 对于 $\mathcal{L}$ 公式集 $\Phi$ 和公式 $\varphi$ (都可开可闭), 若对于任意 $\mathcal{L}$ 的解释 $\sigma$ 都满足: 只要 $\sigma(\Phi)=\top$ 那么一定 $\sigma(\varphi)=\top$,
+        则称 $\varphi$ 是 $\Phi$ 的语义后承 (semantic entailment/consequence), 记为 $\Phi \models \varphi$.
+        当 $\Phi$ 为空集, 即任意 $\sigma$ 都满足 $\sigma(\varphi)=\top$, 记为 $\models \varphi$.
+        当然, 对于语句集 $\Phi$ 和 $\varphi$, $\Phi\models \varphi$ 是指对于任意 $\mathcal{A}$ 都 $\langle \mathcal{A}, \_\rangle(\Phi) = \langle \mathcal{A}, \_\rangle(\varphi)$.
+
+    \item 前面定义所谓 ``只要\ldots 就\ldots'' 是指实质蕴含.
+        注意 $\Phi\not\models \varphi$ 不等价于 $\Phi\models\lnot\varphi$: 前提都为真的时候, 有时结论为真, 有时结论为假; 无论公式闭或者开.
+
+    \item 若 $\Phi$, $\varphi$ 既是 $\mathcal{L}_1$ 公式也是 $\mathcal{L}_2$ 公式, 则 $\Phi\models_1\varphi$ 当且仅当 $\Phi\models_2\varphi$.
+        所以 $\models$ 和语言无关 (当然语言至少包含公式中非逻辑符号), 只与公式表达的命题的真假有关.
+
+    \item $\mathcal{L}$ 公式 $\varphi$ 称\emph{可满足}, 若存在解释 $\sigma$ 满足 $\varphi$.
+        公式 $\varphi$ 称\emph{有效的}, 若所有解释 $\sigma$ 都满足 $\varphi$, 即 $\models\varphi$.
+
+    \item 有\begin{align*}
+            \sigma(\mathbf{s} [\mathbf{x}\mapsto \mathbf{t}]) &= \sigma[\mathbf{x}\mapsto\sigma(\mathbf{t})]\, (\mathbf{s})\\
+            \sigma(\varphi [\mathbf{x}\mapsto \mathbf{t}]) &= \sigma[\mathbf{x}\mapsto\sigma(\mathbf{t})]\, (\varphi)\\
+        \end{align*}说明语形代换和语义的关系
+        设 $\varphi$ 经过 $\alpha$ 变换 (新量化变元是 fresh 的) 得到 $\varphi'$, 则 $\models \varphi\leftrightarrow \varphi'$, 说明 $\alpha$ 变换不改变语义.
+\end{itemize}
+
+
+
+\section{第五章}
+    TODO: 仔细学习.
+\begin{itemize}
+    \item 逻辑学家使用的推理方式常见分为三种: Hilbert 公理系统, Gentzen 自然推演, Tableau 演算.
+        Gentzen 自然推演最接近非形式化的推演.
+    \item 自然推演中, $\mathcal{L}$ 中的一个推理表示为 $\mathcal{L}$ 的一颗树,
+        有穷多个叶子表示前提, 而唯一一个根表示结论.
+    \item 连接词规则在 (证明论) 语形上规定了连接词的含义, 而不用诉诸模型论中含义.
+    \item 推演去掉中间步骤, 只有前提结论, 便得到了 ``导出规则''.
+
+    \item 前提是集合: 不考虑 substructural 逻辑.
+
+    \item 连接词规则都是元语言中的公式模式形成的一颗树.
+        简单的包含 $\land$-I ($\land$ 引入), $\land$-E ($\land$ 消去), $\lor$-I, $\to$-E (即 modus ponens).
+        \[
+            \inference[$\to$-E]
+                {\varphi & \varphi \to \psi}
+                {\psi}
+            \]
+        复杂的有: $\to$-E: 使用规则的时候需要消去前提 $\varphi$, 而且要求 $\varphi$ 是 $\psi$ 的 (可能非直接) 前提. 注意 $\varphi$ 可以和 $\psi$ 是一样的, 这样就是重言式 $\varphi \to \varphi$.
+        \[
+            \inference[$\to$-I]
+                {[\varphi]\\ \vdots \\ \psi}
+                {\varphi \to \psi}
+        \]
+        $\lor$-E: 需要消去前提
+        \[
+            \begin{matrix}
+                 & [\varphi] & [\psi] \\
+                 & \vdots & \vdots \\
+                 \varphi \lor \psi & \theta & \theta \\
+                 \hline
+                 & \theta &
+            \end{matrix}
+        \]
+        以及 $\lnot$-I: 如果能够推演 $\lnot \varphi$, 说明 $\varphi$ 可证伪 (i.e. 归谬法 RAA), 这里认为就是能从 $\varphi$ 能推出矛盾 (也就是为什么有时将 $\lnot \varphi$ 定义为 $\lnot \varphi\to \bot$)
+        \[
+            \inference[$\lnot$-I]{
+                [\varphi] \\ \vdots \\ \psi \lor \lnot \psi
+            }{
+                \lnot \varphi
+            }
+        \]
+    \item 直觉主义规则 IN: ``ex falso sequitur quodlibet'' 矛盾推出一切.
+        \[
+            \inference[IN]
+                {\varphi \land \lnot \varphi}
+                {\psi}
+            \]
+        这说明所有的矛盾式等价 (互相推出). 有的文献中就用 $\bot$ 表示.
+    \item 反证法: 形式上类似 $\lnot$-I
+        \[
+            \inference[CL]
+                {[\lnot \varphi] \\ \vdots \\ \psi \land \lnot \psi}
+                {\varphi}
+            \]
+
+    \item 定义推演本身的形式: 归纳的, $D$ 是推演 (树) 的元变元.
+
+    \item \emph{极小命题逻辑}: $\mathcal{L}$ 中极小命题推演定义为: 从单点树开始, $\land$-[IE], $\lor$-[IE], $\to$-[IE], $\lnot$-I.
+    \item 对 $\mathcal{L}$ 中公式集 $\Phi$ 和公式 $\varphi$, 若存在
+        $\mathcal{L}$ 中极小命题推演使得其前提是 $\Psi$ 子集, 结论是 $\varphi$,
+        那么称 $\varphi$ 是 $\Phi$ 的极小命题\emph{语形后承}, 记为 $\Phi
+        \vdash_{\text{m}} \varphi$. 若 $\Psi=\emptyset$, 称 $\varphi$
+        为极小逻辑定理.
+
+    \item \emph{直觉主义命题逻辑}: 极小命题逻辑加上 IN 规则. 对应的语形后承记为 $\Phi \vdash_{\text{i}} \varphi$.
+
+    \item 直觉主义命题逻辑中, $\land$ 和 $\lor$, $\lnot$ 以及 $\to$ 无法互相定义.
+        所以 de-morgan 律只成立一部分.
+
+    \item \emph{经典逻辑}: 直觉主义逻辑加上排中律 CL ($\vdash_{\text{c}}$).
+
+    \item 一阶逻辑中还有 $\forall$-[IE], $\exists$-[IE] (用自由变元表示全称约束),
+        \[ \inference[$\forall$-I]
+            { D \\ \varphi[\mathbf{x}\mapsto\mathbf{y}] & \mathbf{y}\text{ free in }\varphi\text{ and }D}
+            { \forall \mathbf{x}\varphi}
+        \]
+        以及
+        \[\inference[$\equiv$-I]{}{\mathbf{t}\equiv \mathbf{t}}\] 和 \[\inference[$\equiv$-E]{t\equiv s & \varphi(\mathbf{x}\mapsto \mathbf{t})}{\varphi(\mathbf{x}\mapsto \mathbf{s})}\]
+        极小, 直觉, 经典命题加上以上六条又得到了对应的一阶推演.
+
+    \item 固定的某个推演是可判定的, 但是能否从 $\Phi$ 推演到 $\varphi$ 不是. 这是递归论讨论的内容.
+
+    \item 通过 ``否定化'' 可以将经典逻辑嵌入到直觉逻辑中 (Godel and Gentzen), 例如 $\Phi \vdash_{\text{c}} \varphi \Leftrightarrow \Phi^g \vdash_{\text{i}} \varphi^g$, 其中 $\varphi^g$ 为公式 $\varphi$ 之 Godel 翻译.
+
+    \item Church 证明了, 经典逻辑推演性不可判定. 因此直觉逻辑推演性也是不可判定的.
+\end{itemize}
+
+
+\section{第六章}
+\begin{itemize}
+    \item $\Phi \models \varphi \Leftrightarrow \Phi \vdash_{\text{c}} \varphi$, (这里 $\models$ 是经典语义).
+        特别的, 当 $\Phi=\emptyset$, 其说明经典逻辑定理集恰好是有效公式集.
+        这对于经典命题逻辑和经典一阶逻辑都成立.
+
+    \item 一致性: $\Phi$ 是经典一致的, 当且仅当不存在 $\varphi$ 使得 $\Phi \vdash_{\text{c}} \varphi\land\lnot \varphi$.
+\end{itemize}
+
+
+\section{书中记号}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{Mr}
+        \hline
+        \text{书中} & 我 \\
+        \hline
+        \rho(a/\mathbf{x}) & $\rho [\mathbf{x} \mapsto a]$\\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+
+
+\pagebreak
+\part{参考}
+\section{证明规则}
+
+    \hrulefill
+
+\[
+    \prftree[r]{$\land$-E}
+        {\varphi \land \psi}
+        {\varphi} 
+    \qquad
+    \prftree[r]{$\land$-E}
+        {\varphi \land \psi}
+        {\psi}
+    \qquad
+    \prftree[r]{$\land$-I}
+        {\varphi}
+        {\psi}
+        {\varphi \land \psi}
+    \]
+
+    \hrulefill
+
+\[
+    \prftree[r]{$\lor$-I}
+        {\varphi}
+        {\varphi \lor \psi}
+    \qquad
+    \prftree[r]{$\lor$-I}
+        {\psi}
+        {\varphi \lor \psi}
+    \qquad
+    \prftree[r]{$\lor$-E}
+        {\varphi \lor \psi}
+        {\prfsummary{\prfboundedassumption{\varphi}}{\theta}}
+        {\prfsummary{\prfboundedassumption{\psi}}{\theta}}
+        {\theta}
+    \]
+
+    \hrulefill
+
+\[
+    \prftree[r]{$\to$-E}
+        {\varphi}
+        {\varphi \to \psi}
+        {\psi}
+    \qquad
+    \prftree[r]{$\to$-I}
+        {\prfsummary{\prfboundedassumption{\varphi}}{\psi}}
+        {\varphi \to \psi}
+    \]
+
+    \hrulefill
+
+\[
+    \prftree[r]{$\lnot$-I}
+        {\prfsummary{\prfboundedassumption{\varphi}}{\psi \land \lnot \psi}}
+        {\lnot \varphi}
+    \]
+
+    \hrulefill
+
+\[
+    \prftree[r]{IN}
+        {\varphi \land\lnot\varphi}
+        {\psi}
+    \qquad
+    \prftree[r]{CL}
+        {\prfsummary{\prfboundedassumption{\lnot\varphi}}{\psi \land \lnot \psi}}
+        {\varphi}
+    \]
+
+\paragraph{结论}
+\begin{itemize}
+    \item 直觉主义的析取三段论是 $\varphi \lor \psi, \lnot\varphi\vdash \psi$ 以及
+        $\lnot\varphi \lor \psi, \varphi \vdash \psi$.
+\end{itemize}
+
+\end{document}
